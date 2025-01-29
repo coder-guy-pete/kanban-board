@@ -20,7 +20,7 @@ export const authenticateToken = (
 
     jwt.verify(token, secretKey, (err, user) => {
       if (err) {
-        return res.sendStatus(403); // Forbidden
+        return res.sendStatus(403).json({ message: 'Token expired or invalid' });
       }
       req.user = user as JwtPayload;
       return next();
