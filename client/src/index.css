@@ -242,6 +242,12 @@ tbody tr:nth-child(odd) {
   justify-content: center;
 }
 
+.sort-button {
+  background-color: transparent;
+  border: transparent;
+  padding: 0 0.5em;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {
