@@ -1,9 +1,10 @@
-import { useEffect, useState, useLayoutEffect } from 'react';
+import { useEffect, useState, useLayoutEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { retrieveTickets, deleteTicket } from '../api/ticketAPI';
 import ErrorPage from './ErrorPage';
 import Swimlane from '../components/Swimlane';
+import SearchBar from '../components/Searchbar';
 import { TicketData } from '../interfaces/TicketData';
 import { ApiMessage } from '../interfaces/ApiMessage';
 
@@ -15,6 +16,20 @@ const Board = () => {
   const [tickets, setTickets] = useState<TicketData[]>([]);
   const [error, setError] = useState(false);
   const [loginCheck, setLoginCheck] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredTickets = useMemo(() => {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    return tickets.filter(ticket => {
+      const matchedName = ticket.name?.toLowerCase().includes(lowerCaseSearchTerm);
+      const matchedUser = ticket.assignedUser?.username?.toLowerCase().includes(lowerCaseSearchTerm);
+      return matchedName || matchedUser;
+    });
+  }, [tickets, searchTerm]);
 
   const checkLogin = () => {
     if(auth.loggedIn()) {
@@ -67,17 +82,21 @@ const Board = () => {
         </div>  
       ) : (
           <div className='board'>
+            <SearchBar
+              searchTerm={searchTerm}
+              onSearchChange={handleSearchChange}
+            />
             <button type='button' id='create-ticket-link'>
-              <Link to='/create' >New Ticket</Link>
+              <Link to='/create' className='new-ticket-btn' >New Ticket</Link>
             </button>
             <div className='board-display'>
               {boardStates.map((status) => {
-                const filteredTickets = tickets.filter(ticket => ticket.status === status);
+                const swimlaneTickets = filteredTickets.filter(ticket => ticket.status === status);
                 return (
                   <Swimlane 
                     title={status} 
                     key={status} 
-                    tickets={filteredTickets} 
+                    tickets={swimlaneTickets} 
                     deleteTicket={deleteIndvTicket}
                   />
                 );
