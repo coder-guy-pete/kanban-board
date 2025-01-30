@@ -47,7 +47,7 @@
 
 ## Usage
 
-Video Walkthrough of the application:
+![kanban-board](./assets/kanban-board_walkthrough.gif)
 
 ### Core Functionality
 
