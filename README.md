@@ -48,6 +48,7 @@
 ## Usage
 
 ![kanban-board](./assets/kanban-board_walkthrough.gif)
+Deployed via Render here: <https://kanban-board-v40p.onrender.com/>
 
 ### Core Functionality
 
