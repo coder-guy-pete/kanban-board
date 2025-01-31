@@ -15,7 +15,7 @@ export const authenticateToken = (
   const isAdmin = process.env.SECRET_ADMIN || '';
 
   // Check if the user is an admin
-  if (authHeader === isAdmin) {
+  if (authHeader && authHeader === isAdmin) {
     req.user = { username: 'admin' };
     return next();
   }
