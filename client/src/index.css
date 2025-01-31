@@ -24,7 +24,6 @@ input:-moz-placeholder {
 
 a {
   font-weight: 500;
-  color: #ECF0F1;
   text-decoration: inherit;
 }
 a:hover {
@@ -261,11 +260,6 @@ tbody tr:nth-child(odd) {
   margin: 0.5em;
   border-radius: 8px;
   border: 1px solid #000;
-  color:#ECF0F1;
-}
-
-.search-bar::placeholder {
-  color: #ECF0F1;
 }
 
 @media (prefers-color-scheme: light) {
